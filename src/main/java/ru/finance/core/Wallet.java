@@ -127,6 +127,19 @@ public final class Wallet {
         return new Report(income, expenses, byCategory, transactionCount);
     }
 
+    Wallet copy() {
+        Wallet copy = new Wallet();
+        copy.categories.addAll(categories);
+        copy.budgets.putAll(budgets);
+        copy.transactions.addAll(transactions);
+        return copy;
+    }
+
+    void recordTransfer(Transaction transaction) {
+        categories.add(transaction.category());
+        transactions.add(transaction);
+    }
+
     private String requireCategory(String category) {
         String name = normalizeCategory(category);
         if (!categories.contains(name)) {
